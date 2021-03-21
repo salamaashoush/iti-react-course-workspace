@@ -1,47 +1,25 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import { useTodoList } from "../hooks";
-import { TodoItem } from './TodoItem';
 
-export function TodoList() {
+export function TodoList({ children }) {
+  console.log(children);
   const [todoInputValue, setTodoInputValue] = useState("");
   const todoService = useTodoList();
+  const header = Children.toArray(children).find(
+    (c) => c.props.id === "header"
+  );
+  const body = Children.toArray(children).find((c) => c.props.id === "body");
 
-  return todoService.loading ? (
-    <h1>Loading...</h1>
-  ) : (
+  const footer = Children.toArray(children).find(
+    (c) => c.props.id === "footer"
+  );
+
+  return (
     <div>
-      <label htmlFor="todo-input">Todo</label>
-      <input
-        id="todo-input"
-        className="input"
-        style={{ backgroundColor: "yellow" }}
-        type="text"
-        value={todoInputValue}
-        onChange={(e) => setTodoInputValue( e.target.value )}
-      />
-      <button
-        onClick={() =>{
-          todoService.addTodo({
-            id: Math.random(),
-            title:todoInputValue,
-            completed: false,
-          })
-          setTodoInputValue("")
-        }
-        }
-      >
-        Add
-      </button>
-      <ul>
-        {todoService.todos.map((item) => (
-          <TodoItem
-            key={item.id}
-            item={item}
-            handleRemoveTodo={todoService.completeTodo}
-            handleCompleteTodo={todoService.completeTodo}
-          ></TodoItem>
-        ))}
-      </ul>
+      <button>Close</button>
+      {header}
+      {body}
+      {footer}
     </div>
   );
 }

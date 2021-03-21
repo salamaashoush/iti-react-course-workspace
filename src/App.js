@@ -1,8 +1,8 @@
 import "./App.css";
-import { TodoList } from "./components/TodoList";
+import { Blog } from "./blog/Blog";
 
 function App() {
-  return <TodoList></TodoList>;
+  return <Blog></Blog>;
 }
 
 export default App;
